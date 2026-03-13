@@ -1,6 +1,8 @@
 require("dotenv").config()
 const app = require("./src/app")
 const connectToDB = require("./src/config/database")
+const cookieParser = require("cookie-parser")
+app.use(cookieParser())
 
 connectToDB()
 const PORT = process.env.PORT || 3000;
