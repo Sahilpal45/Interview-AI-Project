@@ -44,10 +44,10 @@ async function registerUserController(req, res) {
 
     res.cookie("token", token, {
     httpOnly: true,
-   secure: true,
-   sameSite: "none",
-    maxAge: 24 * 60 * 60 * 1000
-   })
+    secure: true,
+    sameSite: "none"
+})
+
 
 
 
@@ -97,9 +97,9 @@ async function loginUserController(req, res) {
     res.cookie("token", token, {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
-    maxAge: 24 * 60 * 60 * 1000
-    })
+    sameSite: "none"
+})
+
 
     res.status(200).json({
         message: "User loggedIn successfully.",
