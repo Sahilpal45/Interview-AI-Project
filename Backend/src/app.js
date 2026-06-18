@@ -1,6 +1,7 @@
 const express = require("express")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
+const { GoogleGenAI } = require("@google/genai")
 
 const app = express()
 
