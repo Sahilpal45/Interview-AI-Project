@@ -1,7 +1,6 @@
 const express = require("express")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
-const { GoogleGenAI } = require("@google/genai")
 
 const app = express()
 
@@ -21,20 +20,35 @@ const interviewRouter = require("./routes/interview.routes")
 
 
 /* using all the routes here */
-const ai = new GoogleGenAI({
-    apiKey: process.env.GOOGLE_GENAI_API_KEY
-})
-app.get("/test-gemini", async (req, res) => {
+const OpenAI = require("openai");
+const openai = new OpenAI({
+  apiKey: process.env.DEEPSEEK_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
+});
+app.get("/test-ai", async (req, res) => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: "Hello"
+    const response = await openai.chat.completions.create({
+      model: "deepseek/deepseek-chat",
+      messages: [
+        {
+          role: "user",
+          content: "Say hello",
+        },
+      ],
     });
 
-    res.send(response.text);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
+    res.json({
+      success: true,
+      response: response.choices[0].message.content,
+    });
+  } catch (error) {
+    console.error("DeepSeek Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
   }
 });
 app.use("/api/auth", authRouter)
