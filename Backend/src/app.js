@@ -15,15 +15,6 @@ app.use(cors({
 
 
 /* require all the routes here */
-app.get("/test-gemini", async (req, res) => {
-  try {
-    const result = await model.generateContent("Hello");
-    res.json(result.response.text());
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
-});
 const authRouter = require("./routes/auth.routes")
 const interviewRouter = require("./routes/interview.routes")
 
