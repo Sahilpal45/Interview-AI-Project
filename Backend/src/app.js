@@ -20,6 +20,22 @@ const interviewRouter = require("./routes/interview.routes")
 
 
 /* using all the routes here */
+const ai = new GoogleGenAI({
+    apiKey: process.env.GOOGLE_GENAI_API_KEY
+})
+app.get("/test-gemini", async (req, res) => {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: "Hello"
+    });
+
+    res.send(response.text);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
 app.use("/api/auth", authRouter)
 app.use("/api/interview", interviewRouter)
 
